@@ -40,26 +40,29 @@ function getChatButtonCloseIcon() {
   return CHAT_BUTTON_CLOSE_ICON
 }
 
-function handleChatWindowSizeChange(e, chatbotContainer) {
+function handleChatWindowSizeChange(e, chatbotChatboxContainer) {
   if (e.matches) {
-    chatbotContainer.style.height = '60vh'
-    chatbotContainer.style.width = '400px'
-    chatbotContainer.style.right = '20px'
+    chatbotChatboxContainer.style.height = '60vh'
   } else {
-    chatbotContainer.style.height = '80vh'
-    chatbotContainer.style.width = '100%'
-    chatbotContainer.style.right = '0px'
+    chatbotChatboxContainer.style.height = '80vh'
   }
 }
 
 // don't render another message bubble if we're already inside an chatbot iframe
 if (!window.location.pathname.startsWith('/chatbot-iframe')) {
+
+  const chatButtonContainer = document.createElement('div')
+  chatButtonContainer.setAttribute('id', 'chatter-chat-button-container')
+  chatButtonContainer.style.position = 'fixed'
+  chatButtonContainer.style.right = '20px'
+  chatButtonContainer.style.bottom = '20px'
+
   // create the chat button element
   const chatButton = document.createElement('div')
   chatButton.setAttribute('id', 'chatter-chat-button')
+  chatButton.style.display = 'flex'
   chatButton.style.position = 'sticky'
   chatButton.style.bottom = '20px'
-  chatButton.style.right = '20px'
   chatButton.style.width = CHAT_BUTTON_SIZE + 'px'
   chatButton.style.height = CHAT_BUTTON_SIZE + 'px'
   chatButton.style.borderRadius = CHAT_BUTTON_RADIUS + 'px'
@@ -69,20 +72,26 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
   chatButton.style.zIndex = 1001
   chatButton.style.transition = 'all .2s ease-in-out'
 
-  // create the chatbot container element that'll contain the iframe
-  const chatbotContainer = document.createElement('div')
-  chatbotContainer.setAttribute('id', 'chatter-chatbot-container')
-  chatbotContainer.style.position = 'sticky'
-  chatbotContainer.style.backgroundColor = 'white'
-  chatbotContainer.style.borderRadius = '10px'
-  chatbotContainer.style.zIndex = 1000
-  chatbotContainer.style.bottom = '80px'
-  chatbotContainer.style.right = '20px'
-  chatbotContainer.style.cursor = 'pointer'
-  chatbotContainer.style.display = 'none'
-  chatbotContainer.style.boxShadow = 'rgba(150, 150, 150, 0.2) 0px 10px 30px 0px, rgba(150, 150, 150, 0.2) 0px 0px 0px 1px'
+  const chatbotChatboxContainer = document.createElement('div')
+  chatbotChatboxContainer.setAttribute('id', 'chatter-chatbot-chatbox-container')
+  chatbotChatboxContainer.style.position = 'fixed'
+  chatbotChatboxContainer.style.right = '20px'
+  chatbotChatboxContainer.style.bottom = '80px'
+  chatbotChatboxContainer.style.display = 'none'
 
-  document.body.appendChild(chatbotContainer)
+  // create the chatbot container element that'll contain the iframe
+  const chatbotChatbox = document.createElement('div')
+  chatbotChatbox.setAttribute('id', 'chatter-chatbot-chatbox')
+  chatbotChatbox.style.position = 'sticky'
+  chatbotChatbox.style.backgroundColor = 'white'
+  chatbotChatbox.style.borderRadius = '10px'
+  chatbotChatbox.style.boxShadow = 'rgba(150, 150, 150, 0.2) 0px 10px 30px 0px, rgba(150, 150, 150, 0.2) 0px 0px 0px 1px'
+  chatbotChatbox.style.zIndex = 1000
+  chatbotChatbox.style.bottom = '80px'
+  chatbotChatbox.style.cursor = 'pointer'
+
+  document.body.appendChild(chatButtonContainer)
+  chatButtonContainer.appendChild(chatButton)
 
 
   chatButton.addEventListener('mouseenter', () => {
@@ -92,7 +101,8 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
     chatButton.style.transform = 'scale(1)'
   })
 
-  document.body.appendChild(chatButton)
+  document.body.appendChild(chatbotChatboxContainer)
+  chatbotChatboxContainer.appendChild(chatbotChatbox)
 
   // create the chat button icon element
   const chatButtonIcon = document.createElement('div')
@@ -113,16 +123,16 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
   // toggle the chat component when the chat button is clicked
   chatButton.addEventListener('click', () => {
     // toggle the chat component
-    if (chatbotContainer.style.display === 'none') {
-      chatbotContainer.style.display = 'flex'
+    if (chatbotChatboxContainer.style.display === 'none') {
+      chatbotChatboxContainer.style.display = 'flex'
       chatButtonIcon.innerHTML = getChatButtonCloseIcon()
     } else {
-      chatbotContainer.style.display = 'none'
+      chatbotChatboxContainer.style.display = 'none'
       chatButtonIcon.innerHTML = getChatButtonIcon()
     }
   })
 
-  chatbotContainer.innerHTML = `<iframe
+  chatbotChatbox.innerHTML = `<iframe
     src="https://custom-gpt-ceb44.firebaseapp.com/chatbot-iframe/${chatbotId}"
     width="100%"
     height="100%"
@@ -133,8 +143,8 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
   // this media query will adjust styling for desktop (> 500px)
   const mediaQuery = window.matchMedia('(min-width: 500px)')
   // Register event listener
-  mediaQuery.addEventListener('change', handleChatWindowSizeChange)
+  mediaQuery.addEventListener('change', (q) => handleChatWindowSizeChange(q, chatbotChatboxContainer))
 
   // Initial check
-  handleChatWindowSizeChange(mediaQuery, chatbotContainer)
+  handleChatWindowSizeChange(mediaQuery, chatbotChatboxContainer)
 }
