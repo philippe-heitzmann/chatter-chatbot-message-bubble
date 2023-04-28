@@ -57,7 +57,7 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
   // create the chat button element
   const chatButton = document.createElement('div')
   chatButton.setAttribute('id', 'chatter-chat-button')
-  chatButton.style.position = 'fixed'
+  chatButton.style.position = 'sticky'
   chatButton.style.bottom = '20px'
   chatButton.style.right = '20px'
   chatButton.style.width = CHAT_BUTTON_SIZE + 'px'
@@ -72,7 +72,7 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
   // create the chatbot container element that'll contain the iframe
   const chatbotContainer = document.createElement('div')
   chatbotContainer.setAttribute('id', 'chatter-chatbot-container')
-  chatbotContainer.style.position = 'fixed'
+  chatbotContainer.style.position = 'sticky'
   chatbotContainer.style.backgroundColor = 'white'
   chatbotContainer.style.borderRadius = '10px'
   chatbotContainer.style.zIndex = 1000
