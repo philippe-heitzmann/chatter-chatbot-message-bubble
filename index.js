@@ -5,23 +5,7 @@ const CHAT_BUTTON_ICON_COLOR = 'white'
 const scriptTag = document.currentScript
 
 const chatbotId = scriptTag.id ?? ''
-
-// const getChatbotCustomSettings = async () => {
-//   const response = await fetch(
-//     `https://custom-gpt-ceb44.firebaseapp.com/chatbot-settings/${chatbotId}`,
-//     {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     }
-//   )
-
-//   const { settings } = await response.json()
-//   TODO allow user to customize settings and add them here
-// }
-
-// getChatbotCustomSettings()
+const userId = scriptTag.idp ?? ''
 
 function getChatButtonIcon() {
   const CHAT_BUTTON_ICON = `<svg xmlns="http://www.w3.org/2000/svg" id="chatIcon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="${CHAT_BUTTON_ICON_COLOR}" width="24" height="24">
@@ -133,7 +117,7 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
   })
 
   chatbotChatbox.innerHTML = `<iframe
-    src="https://custom-gpt-ceb44.firebaseapp.com/chatbot-iframe/${chatbotId}"
+    src="https://custom-gpt-ceb44.firebaseapp.com/chatbot-iframe/${chatbotId}?userId=${userId}"
     width="100%"
     height="100%"
     frameborder="0"
