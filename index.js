@@ -5,7 +5,8 @@ const CHAT_BUTTON_ICON_COLOR = 'white'
 const scriptTag = document.currentScript
 
 const chatbotId = scriptTag.id ?? ''
-const userId = scriptTag.idp ?? ''
+const userId = scriptTag.getAttribute('idp') ?? ''
+// const userId = scriptTag.idp ?? ''
 
 function getChatButtonIcon() {
   const CHAT_BUTTON_ICON = `<svg xmlns="http://www.w3.org/2000/svg" id="chatIcon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="${CHAT_BUTTON_ICON_COLOR}" width="24" height="24">
