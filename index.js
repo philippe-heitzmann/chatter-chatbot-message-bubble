@@ -118,7 +118,7 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
   })
 
   chatbotChatbox.innerHTML = `<iframe
-    src="https://custom-gpt-ceb44.firebaseapp.com/chatbot-iframe/${chatbotId}?userId=${userId}"
+    src="https://chatq.co/chatbot-iframe/${chatbotId}?userId=${userId}"
     width="100%"
     height="100%"
     frameborder="0"
