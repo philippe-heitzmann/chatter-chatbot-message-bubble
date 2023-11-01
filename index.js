@@ -63,6 +63,8 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
   chatbotChatboxContainer.style.right = '40px'
   chatbotChatboxContainer.style.bottom = '80px'
   chatbotChatboxContainer.style.display = 'none'
+  chatbotChatboxContainer.style.width = 200;  // Set width
+  chatbotChatboxContainer.style.height = 500;
 
   // create the chatbot container element that'll contain the iframe
   const chatbotChatbox = document.createElement('div')
