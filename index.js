@@ -60,7 +60,7 @@ if (!window.location.pathname.startsWith('/chatbot-iframe')) {
   const chatbotChatboxContainer = document.createElement('div')
   chatbotChatboxContainer.setAttribute('id', 'chatter-chatbot-chatbox-container')
   chatbotChatboxContainer.style.position = 'fixed'
-  chatbotChatboxContainer.style.right = '20px'
+  chatbotChatboxContainer.style.right = '40px'
   chatbotChatboxContainer.style.bottom = '80px'
   chatbotChatboxContainer.style.display = 'none'
 
